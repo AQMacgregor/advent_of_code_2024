@@ -1,0 +1,6 @@
+[package]
+name = "day-2"
+
+[dependencies]
+
+[dev-dependencies]
