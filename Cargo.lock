@@ -7,6 +7,7 @@ name = "advent_of_code"
 version = "0.1.0"
 dependencies = [
  "day-1",
+ "day-10",
  "day-2",
  "day-3",
  "day-4",
@@ -29,6 +30,13 @@ dependencies = [
 [[package]]
 name = "day-1"
 version = "0.0.0"
+
+[[package]]
+name = "day-10"
+version = "0.0.0"
+dependencies = [
+ "itertools",
+]
 
 [[package]]
 name = "day-2"
