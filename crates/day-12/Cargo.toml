@@ -1,0 +1,7 @@
+[package]
+name = "day-12"
+
+[dependencies]
+itertools.workspace = true
+
+[dev-dependencies]

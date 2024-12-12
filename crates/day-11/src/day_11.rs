@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 use std::fs;
-use std::hash::Hash;
-use std::thread;
 
 pub struct Day11{
     cache: HashMap<i64, Vec<i64>>
@@ -100,7 +98,7 @@ impl Day11{
         values.push(start);
         let mut cache: HashMap<i64, (i64, i64)> = HashMap::new();
         
-        for i in 0..count {
+        for _ in 0..count {
             let current_line = values.clone();
             values = Vec::new();
             for value in current_line{
@@ -108,7 +106,7 @@ impl Day11{
                     values.push(1);
                 }else if value.to_string().len() % 2 == 0{
                     let cached_value = cache.get(&value);
-                    if(cached_value.is_some()){
+                    if cached_value.is_some(){
                         let (val_1_int, val_2_int) = cached_value.unwrap();
                         values.push(*val_1_int);
                         values.push(*val_2_int);

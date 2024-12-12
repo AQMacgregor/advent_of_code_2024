@@ -9,6 +9,7 @@ use day_8::day_8::Day8;
 use day_9::day_9::Day9;
 use day_10::day_10::Day10;
 use day_11::day_11::Day11;
+use day_12::day_12::Day12;
 
 pub fn main() {
     let day_1_1 = Day1::new().part1();
@@ -65,4 +66,9 @@ pub fn main() {
     println!("Day 11: {}", day_11_1);
     let day_11_2 = Day11::new().part2();
     println!("Day 11: {}", day_11_2);
+
+    let day_12_1 = Day12::new().part1();
+    println!("Day 12: {}", day_12_1);
+    let day_12_2 = Day12::new().part2();
+    println!("Day 12: {}", day_12_2);
 }
