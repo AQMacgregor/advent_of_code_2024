@@ -70,12 +70,32 @@ impl Day12{
                     counted.push(value);
                     perimeter += perimeters[value.1][value.0];
                 } 
-                println!("char: {}, perimeter: {}, size: {}",char, perimeter, size);
                 total += perimeter * size;
             }
         }
 
         total
+    }
+
+    fn is_corner(&self, char: char, diagonal:Option<(usize,usize)>, direction_1: Option<(usize,usize)>, direction_2:Option<(usize,usize)>) -> bool{
+        if diagonal.is_some_and(|l| {self.grid[l.1][l.0] != char}) || diagonal.is_none() {
+            if (direction_1.is_some_and(|l| {self.grid[l.1][l.0] != char}) || direction_1.is_none()) 
+                && (direction_2.is_some_and(|l| {self.grid[l.1][l.0] != char}) || direction_2.is_none()){
+                true
+            }else if direction_1.is_some_and(|l| {self.grid[l.1][l.0] == char}) 
+                && direction_2.is_some_and(|l| {self.grid[l.1][l.0] == char}) {
+                true
+            }else{
+                false
+            }
+        }else{
+            if direction_1.is_some_and(|l| {self.grid[l.1][l.0] != char}) &&
+            direction_2.is_some_and(|l| {self.grid[l.1][l.0] != char}){
+                    true
+                }else{
+                    false
+                }
+        }
     }
 
     pub fn part2(&mut self) -> i32{
@@ -94,6 +114,7 @@ impl Day12{
         for (j, row) in self.grid.iter().enumerate(){
             let mut row_corners = Vec::new();
             for (i, char) in row.iter().enumerate(){
+                let char = *char;
                 let mut corner: i32 = 0;
                 let north = self.go_north(i, j);
                 let east = self.go_east(i, j); 
@@ -101,67 +122,20 @@ impl Day12{
                 let south = self.go_south(i, j);
 
                 let north_east = self.go_north_east(i, j);
-                if north_east.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || north_east.is_none() {
-                    if (north.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || north.is_none()) 
-                        && (east.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || east.is_none()){
-                        corner += 1;
-                    }else if north.is_some_and(|l| {self.grid[l.1][l.0] == *char}) 
-                        && east.is_some_and(|l| {self.grid[l.1][l.0] == *char}) {
-                        corner += 1;
-                    }
-                }else{
-                    if north.is_some_and(|l| {self.grid[l.1][l.0] != *char}) &&
-                        east.is_some_and(|l| {self.grid[l.1][l.0] != *char}){
-                            corner += 1;
-                        }
+                if self.is_corner(char, north_east, north, east){
+                    corner += 1;
                 }
-
                 let north_west = self.go_north_west(i, j);
-                if north_west.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || north_west.is_none() {
-                    if (north.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || north.is_none()) 
-                        && (west.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || west.is_none()){
-                        corner += 1;
-                    }else if north.is_some_and(|l| {self.grid[l.1][l.0] == *char})
-                        && west.is_some_and(|l| {self.grid[l.1][l.0] == *char})  {
-                        corner += 1;
-                    }
-                }else{
-                    if north.is_some_and(|l| {self.grid[l.1][l.0] != *char}) &&
-                        west.is_some_and(|l| {self.grid[l.1][l.0] != *char}){
-                            corner += 1;
-                        }
+                if self.is_corner(char, north_west, north, west){
+                    corner += 1;
                 }
-
                 let south_east = self.go_south_east(i, j);
-                if south_east.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || south_east.is_none() {
-                    if (south.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || south.is_none())
-                        && (east.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || east.is_none()){
-                        corner += 1;
-                    }else if south.is_some_and(|l| {self.grid[l.1][l.0] == *char}) 
-                        && east.is_some_and(|l| {self.grid[l.1][l.0] == *char}) {
-                        corner += 1;
-                    }
-                }else{
-                    if south.is_some_and(|l| {self.grid[l.1][l.0] != *char}) &&
-                        east.is_some_and(|l| {self.grid[l.1][l.0] != *char}){
-                            corner += 1;
-                        }
+                if self.is_corner(char, south_east, south, east){
+                    corner += 1;
                 }
-
                 let south_west = self.go_south_west(i, j);
-                if south_west.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || south_west.is_none() {
-                    if (south.is_some_and(|l| {self.grid[l.1][l.0] != *char}) || south.is_none())
-                        && (west.is_some_and(|l| {self.grid[l.1][l.0] != *char})|| west.is_none()){
-                        corner += 1;
-                    }else if south.is_some_and(|l| {self.grid[l.1][l.0] == *char}) 
-                        && west.is_some_and(|l| {self.grid[l.1][l.0] == *char}) {
-                        corner += 1;
-                    }
-                }else{
-                    if south.is_some_and(|l| {self.grid[l.1][l.0] != *char}) &&
-                        west.is_some_and(|l| {self.grid[l.1][l.0] != *char}){
-                            corner += 1;
-                        }
+                if self.is_corner(char, south_west, south, west){
+                    corner += 1;
                 }
 
                 row_corners.push(corner);
